@@ -44,7 +44,7 @@ fn main() -> Result<(), SmilesInputError> {
     // Molecule trait
     assert_eq!(molecule.atom(0), Ok(&Atom {
         isotope: None,
-        element: Some(Element::C),
+        element: Element::C,
         hydrogens: 2,
         electrons: 0,
         parity: None,

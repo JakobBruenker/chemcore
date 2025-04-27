@@ -92,71 +92,13 @@ mod tests {
     }
 
     #[test]
-    fn organic_star() {
-        assert_eq!(
-            read("C*", None),
-            Ok(DefaultMolecule::new(vec![
-                Node {
-                    atom: Atom {
-                        element: Some(Element::C),
-                        electrons: 0,
-                        hydrogens: 3,
-                        isotope: None,
-                        parity: None
-                    },
-                    bonds: vec![Bond::new(2., None, 1)]
-                },
-                Node {
-                    atom: Atom {
-                        element: None,
-                        electrons: 0,
-                        hydrogens: 0,
-                        isotope: None,
-                        parity: None
-                    },
-                    bonds: vec![Bond::new(2., None, 0)]
-                },
-            ]))
-        )
-    }
-
-    #[test]
-    fn bracket_star() {
-        assert_eq!(
-            read("C[*]", None),
-            Ok(DefaultMolecule::new(vec![
-                Node {
-                    atom: Atom {
-                        element: Some(Element::C),
-                        electrons: 0,
-                        hydrogens: 3,
-                        isotope: None,
-                        parity: None
-                    },
-                    bonds: vec![Bond::new(2., None, 1)]
-                },
-                Node {
-                    atom: Atom {
-                        element: None,
-                        electrons: 0,
-                        hydrogens: 0,
-                        isotope: None,
-                        parity: None
-                    },
-                    bonds: vec![Bond::new(2., None, 0)]
-                },
-            ]))
-        )
-    }
-
-    #[test]
     fn ethane() {
         assert_eq!(
             read("CC", None),
             Ok(DefaultMolecule::new(vec![
                 Node {
                     atom: Atom {
-                        element: Some(Element::C),
+                        element: Element::C,
                         electrons: 0,
                         hydrogens: 3,
                         isotope: None,
@@ -166,7 +108,7 @@ mod tests {
                 },
                 Node {
                     atom: Atom {
-                        element: Some(Element::C),
+                        element: Element::C,
                         electrons: 0,
                         hydrogens: 3,
                         isotope: None,
@@ -185,7 +127,7 @@ mod tests {
             Ok(DefaultMolecule::new(vec![
                 Node {
                     atom: Atom {
-                        element: Some(Element::C),
+                        element: Element::C,
                         electrons: 0,
                         hydrogens: 2,
                         isotope: None,
@@ -195,7 +137,7 @@ mod tests {
                 },
                 Node {
                     atom: Atom {
-                        element: Some(Element::C),
+                        element: Element::C,
                         electrons: 0,
                         hydrogens: 2,
                         isotope: None,
@@ -214,7 +156,7 @@ mod tests {
             Ok(DefaultMolecule::new(vec![
                 Node {
                     atom: Atom {
-                        element: Some(Element::C),
+                        element: Element::C,
                         electrons: 0,
                         hydrogens: 2,
                         isotope: None,
@@ -224,7 +166,7 @@ mod tests {
                 },
                 Node {
                     atom: Atom {
-                        element: Some(Element::C),
+                        element: Element::C,
                         electrons: 0,
                         hydrogens: 2,
                         isotope: None,
@@ -243,7 +185,7 @@ mod tests {
             Ok(DefaultMolecule::new(vec![
                 Node {
                     atom: Atom {
-                        element: Some(Element::C),
+                        element: Element::C,
                         electrons: 0,
                         hydrogens: 3,
                         isotope: None,
@@ -253,7 +195,7 @@ mod tests {
                 },
                 Node {
                     atom: Atom {
-                        element: Some(Element::C),
+                        element: Element::C,
                         electrons: 0,
                         hydrogens: 1,
                         isotope: None,
@@ -266,7 +208,7 @@ mod tests {
                 },
                 Node {
                     atom: Atom {
-                        element: Some(Element::C),
+                        element: Element::C,
                         electrons: 0,
                         hydrogens: 1,
                         isotope: None,
@@ -279,7 +221,7 @@ mod tests {
                 },
                 Node {
                     atom: Atom {
-                        element: Some(Element::C),
+                        element: Element::C,
                         electrons: 0,
                         hydrogens: 3,
                         isotope: None,

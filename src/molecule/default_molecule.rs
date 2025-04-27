@@ -95,10 +95,7 @@ impl Molecule for DefaultMolecule {
 
     fn charge(&self, id: usize) -> Result<f32, GraphError> {
         let node = self.node_for(id)?;
-        let element = match &node.atom.element {
-            Some(element) => element,
-            None => return Ok(0f32),
-        };
+        let element = &node.atom.element;
 
         let mut result = element.valence_electrons() as f32;
 
@@ -165,6 +162,15 @@ impl<'a> Iterator for EdgeIterator<'a> {
 }
 
 #[cfg(test)]
+const DEFAULT_ATOM: Atom = Atom {
+    isotope: None,
+    element: super::Element::H,
+    hydrogens: 0,
+    electrons: 0,
+    parity: None,
+};
+
+#[cfg(test)]
 mod is_empty {
     use pretty_assertions::assert_eq;
 
@@ -180,7 +186,7 @@ mod is_empty {
     #[test]
     fn one_atom() {
         let molecule = DefaultMolecule::new(vec![Node {
-            atom: Atom::default(),
+            atom: DEFAULT_ATOM,
             bonds: vec![],
         }]);
 
@@ -204,7 +210,7 @@ mod order {
     #[test]
     fn one_atom() {
         let molecule = DefaultMolecule::new(vec![Node {
-            atom: Atom::default(),
+            atom: DEFAULT_ATOM,
             bonds: vec![],
         }]);
 
@@ -230,11 +236,11 @@ mod size {
     fn one_edge() {
         let molecule = DefaultMolecule::new(vec![
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![Bond::new(2., None, 1)],
             },
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![Bond::new(2., None, 0)],
             },
         ]);
@@ -260,15 +266,15 @@ mod nodes {
     fn three_atoms() {
         let molecule = DefaultMolecule::new(vec![
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![],
             },
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![],
             },
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![],
             },
         ]);
@@ -295,15 +301,15 @@ mod neighbors {
     fn known_id() {
         let molecule = DefaultMolecule::new(vec![
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![Bond::new(2., None, 1), Bond::new(2., None, 2)],
             },
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![Bond::new(2., None, 0)],
             },
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![Bond::new(2., None, 0)],
             },
         ]);
@@ -328,7 +334,7 @@ mod has_node {
     #[test]
     fn known_id() {
         let molecule = DefaultMolecule::new(vec![Node {
-            atom: Atom::default(),
+            atom: DEFAULT_ATOM,
             bonds: vec![],
         }]);
 
@@ -354,15 +360,15 @@ mod degree {
     fn known_id() {
         let molecule = DefaultMolecule::new(vec![
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![Bond::new(2., None, 1), Bond::new(2., None, 2)],
             },
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![Bond::new(2., None, 0)],
             },
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![Bond::new(2., None, 0)],
             },
         ]);
@@ -381,7 +387,7 @@ mod edges {
     #[test]
     fn methane() {
         let molecule = DefaultMolecule::new(vec![Node {
-            atom: Atom::default(),
+            atom: DEFAULT_ATOM,
             bonds: vec![],
         }]);
 
@@ -392,7 +398,7 @@ mod edges {
     fn trimethylboron() {
         let molecule = DefaultMolecule::new(vec![
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![
                     Bond::new(2., None, 1),
                     Bond::new(2., None, 2),
@@ -400,15 +406,15 @@ mod edges {
                 ],
             },
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![Bond::new(2., None, 0)],
             },
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![Bond::new(2., None, 0)],
             },
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![Bond::new(2., None, 0)],
             },
         ]);
@@ -430,7 +436,7 @@ mod has_edge {
     #[test]
     fn unknown_sid() {
         let molecule = DefaultMolecule::new(vec![Node {
-            atom: Atom::default(),
+            atom: DEFAULT_ATOM,
             bonds: vec![],
         }]);
 
@@ -440,7 +446,7 @@ mod has_edge {
     #[test]
     fn unknown_tid() {
         let molecule = DefaultMolecule::new(vec![Node {
-            atom: Atom::default(),
+            atom: DEFAULT_ATOM,
             bonds: vec![],
         }]);
 
@@ -451,11 +457,11 @@ mod has_edge {
     fn no_bond() {
         let molecule = DefaultMolecule::new(vec![
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![],
             },
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![],
             },
         ]);
@@ -467,11 +473,11 @@ mod has_edge {
     fn bond() {
         let molecule = DefaultMolecule::new(vec![
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![Bond::new(2., None, 1)],
             },
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![Bond::new(2., None, 0)],
             },
         ]);
@@ -499,7 +505,7 @@ mod atom {
         let molecule = DefaultMolecule::new(vec![Node {
             atom: Atom {
                 isotope: None,
-                element: Some(Element::C),
+                element: Element::C,
                 hydrogens: 4,
                 electrons: 0,
                 parity: None,
@@ -511,7 +517,7 @@ mod atom {
             molecule.atom(0),
             Ok(&Atom {
                 isotope: None,
-                element: Some(Element::C),
+                element: Element::C,
                 hydrogens: 4,
                 electrons: 0,
                 parity: None,
@@ -540,7 +546,7 @@ mod charge {
             Node {
                 atom: Atom {
                     isotope: None,
-                    element: Some(Element::C),
+                    element: Element::C,
                     hydrogens: 3,
                     electrons: 0,
                     parity: None,
@@ -550,7 +556,7 @@ mod charge {
             Node {
                 atom: Atom {
                     isotope: None,
-                    element: Some(Element::C),
+                    element: Element::C,
                     hydrogens: 2,
                     electrons: 0,
                     parity: None,
@@ -568,7 +574,7 @@ mod charge {
             Node {
                 atom: Atom {
                     isotope: None,
-                    element: Some(Element::C),
+                    element: Element::C,
                     hydrogens: 3,
                     electrons: 0,
                     parity: None,
@@ -578,7 +584,7 @@ mod charge {
             Node {
                 atom: Atom {
                     isotope: None,
-                    element: Some(Element::C),
+                    element: Element::C,
                     hydrogens: 2,
                     electrons: 2,
                     parity: None,
@@ -601,7 +607,7 @@ mod bond_order {
     #[test]
     fn unknown_sid() {
         let molecule = DefaultMolecule::new(vec![Node {
-            atom: Atom::default(),
+            atom: DEFAULT_ATOM,
             bonds: vec![],
         }]);
 
@@ -611,7 +617,7 @@ mod bond_order {
     #[test]
     fn unknown_tid() {
         let molecule = DefaultMolecule::new(vec![Node {
-            atom: Atom::default(),
+            atom: DEFAULT_ATOM,
             bonds: vec![],
         }]);
 
@@ -622,11 +628,11 @@ mod bond_order {
     fn no_bond() {
         let molecule = DefaultMolecule::new(vec![
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![],
             },
             Node {
-                atom: Atom::default(),
+                atom: DEFAULT_ATOM,
                 bonds: vec![],
             },
         ]);
@@ -640,7 +646,7 @@ mod bond_order {
             Node {
                 atom: Atom {
                     isotope: None,
-                    element: Some(Element::C),
+                    element: Element::C,
                     hydrogens: 3,
                     electrons: 0,
                     parity: None,
@@ -650,7 +656,7 @@ mod bond_order {
             Node {
                 atom: Atom {
                     isotope: None,
-                    element: Some(Element::C),
+                    element: Element::C,
                     hydrogens: 3,
                     electrons: 0,
                     parity: None,
@@ -668,7 +674,7 @@ mod bond_order {
             Node {
                 atom: Atom {
                     isotope: None,
-                    element: Some(Element::C),
+                    element: Element::C,
                     hydrogens: 3,
                     electrons: 0,
                     parity: None,
@@ -678,7 +684,7 @@ mod bond_order {
             Node {
                 atom: Atom {
                     isotope: None,
-                    element: Some(Element::C),
+                    element: Element::C,
                     hydrogens: 3,
                     electrons: 0,
                     parity: None,

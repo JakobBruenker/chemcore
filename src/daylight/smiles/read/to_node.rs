@@ -23,7 +23,6 @@ pub fn to_node(
             AtomError::Isotope => Err(Error::Isotope(trace[id])),
             AtomError::Valence => Err(Error::Valence(trace[id])),
             AtomError::Parity => Err(Error::Parity(trace[id])),
-            AtomError::ChargedStar => Err(Error::ChargedStar(trace[id])),
         },
     }
 }
@@ -56,13 +55,7 @@ fn to_atom(atom: &graph::Atom) -> Result<Atom, AtomError> {
 }
 
 fn star_to_atom() -> Result<Atom, AtomError> {
-    Ok(Atom {
-        element: None,
-        isotope: None,
-        electrons: 0,
-        hydrogens: 0,
-        parity: None,
-    })
+    unimplemented!("Star atoms are not supported");
 }
 
 fn bare_to_atom(
@@ -85,7 +78,7 @@ fn bare_to_atom(
     };
 
     Ok(Atom {
-        element: Some(element),
+        element,
         isotope: None,
         electrons,
         hydrogens: subvalence,
@@ -105,23 +98,19 @@ fn bracket_to_atom(
         Some(charge) => charge.into(),
         None => 0,
     };
-    let element: Option<Element> = match symbol {
+    let element: Element = match symbol {
         parts::BracketSymbol::Star => {
-            if charge == 0 {
-                None
-            } else {
-                return Err(AtomError::ChargedStar);
-            }
+            unimplemented!("Star atoms are not supported");
         }
-        parts::BracketSymbol::Aromatic(aromatic) => Some(aromatic.into()),
-        parts::BracketSymbol::Element(element) => Some(element.into()),
+        parts::BracketSymbol::Aromatic(aromatic) => aromatic.into(),
+        parts::BracketSymbol::Element(element) => element.into(),
     };
-    let isotope = to_isotope(&element, isotope)?;
+    let isotope = to_isotope(element, isotope)?;
     let hydrogens = match hcount {
         Some(hcount) => hcount.into(),
         None => 0,
     };
-    let electrons = to_electrons(&element, hydrogens, charge, bonds)?;
+    let electrons = to_electrons(element, hydrogens, charge, bonds)?;
     let parity = to_parity(hydrogens, parity, bonds)?;
 
     Ok(Atom {
@@ -134,16 +123,12 @@ fn bracket_to_atom(
 }
 
 fn to_isotope(
-    element: &Option<Element>,
+    element: Element,
     isotope: &Option<parts::Number>,
 ) -> Result<Option<u16>, AtomError> {
     let isotope = match isotope {
         Some(isotope) => isotope.into(),
         None => return Ok(None),
-    };
-    let element = match element {
-        Some(element) => element,
-        None => return Ok(Some(isotope)),
     };
 
     if isotope < u16::from(element.atomic_number()) {
@@ -154,15 +139,11 @@ fn to_isotope(
 }
 
 fn to_electrons(
-    element: &Option<Element>,
+    element: Element,
     hydrogens: u8,
     ion: i8,
     bonds: &Vec<graph::Bond>,
 ) -> Result<u8, AtomError> {
-    let element = match element {
-        Some(element) => element,
-        None => return Ok(0),
-    };
     let mut bonding = hydrogens as i16;
 
     for bond_spec in bonds {
@@ -211,7 +192,6 @@ enum AtomError {
     Valence,
     Isotope,
     Parity,
-    ChargedStar,
 }
 
 #[cfg(test)]
@@ -222,15 +202,6 @@ mod tests {
 
     use super::*;
     use crate::molecule::Bond;
-
-    #[test]
-    fn bracket_star_charge() {
-        let Reading { root, trace } = read("C-[*+]").unwrap();
-        let atoms = from_tree(root).unwrap();
-        let result = to_node(1, &atoms, &trace);
-
-        assert_eq!(result, Err(Error::ChargedStar(2)))
-    }
 
     #[test]
     fn lithium_dication() {
@@ -269,27 +240,6 @@ mod tests {
     }
 
     #[test]
-    fn bare_star() {
-        let Reading { root, trace } = read("C*").unwrap();
-        let atoms = from_tree(root).unwrap();
-        let result = to_node(1, &atoms, &trace);
-
-        assert_eq!(
-            result,
-            Ok(Node {
-                atom: Atom {
-                    element: None,
-                    isotope: None,
-                    electrons: 0,
-                    hydrogens: 0,
-                    parity: None
-                },
-                bonds: vec![Bond::new(2., None, 0)]
-            })
-        )
-    }
-
-    #[test]
     fn aromatic_carbon() {
         let Reading { root, trace } = read("Cc").unwrap();
         let atoms = from_tree(root).unwrap();
@@ -299,7 +249,7 @@ mod tests {
             result,
             Ok(Node {
                 atom: Atom {
-                    element: Some(Element::C),
+                    element: Element::C,
                     isotope: None,
                     electrons: 0,
                     hydrogens: 3,
@@ -320,55 +270,13 @@ mod tests {
             result,
             Ok(Node {
                 atom: Atom {
-                    element: Some(Element::C),
+                    element: Element::C,
                     isotope: None,
                     electrons: 0,
                     hydrogens: 3,
                     parity: None
                 },
                 bonds: vec![Bond::new(2., None, 0)]
-            })
-        )
-    }
-
-    #[test]
-    fn bracket_star() {
-        let Reading { root, trace } = read("C[*]").unwrap();
-        let atoms = from_tree(root).unwrap();
-        let result = to_node(1, &atoms, &trace);
-
-        assert_eq!(
-            result,
-            Ok(Node {
-                atom: Atom {
-                    element: None,
-                    isotope: None,
-                    electrons: 0,
-                    hydrogens: 0,
-                    parity: None
-                },
-                bonds: vec![Bond::new(2., None, 0)]
-            })
-        )
-    }
-
-    #[test]
-    fn bracket_star_12() {
-        let Reading { root, trace } = read("[12*]").unwrap();
-        let atoms = from_tree(root).unwrap();
-        let result = to_node(0, &atoms, &trace);
-
-        assert_eq!(
-            result,
-            Ok(Node {
-                atom: Atom {
-                    element: None,
-                    isotope: Some(12),
-                    electrons: 0,
-                    hydrogens: 0,
-                    parity: None
-                },
-                bonds: vec![]
             })
         )
     }
@@ -383,7 +291,7 @@ mod tests {
             result,
             Ok(Node {
                 atom: Atom {
-                    element: Some(Element::C),
+                    element: Element::C,
                     isotope: None,
                     electrons: 0,
                     hydrogens: 4,
@@ -404,7 +312,7 @@ mod tests {
             result,
             Ok(Node {
                 atom: Atom {
-                    element: Some(Element::C),
+                    element: Element::C,
                     isotope: None,
                     electrons: 0,
                     hydrogens: 3,
@@ -425,7 +333,7 @@ mod tests {
             result,
             Ok(Node {
                 atom: Atom {
-                    element: Some(Element::C),
+                    element: Element::C,
                     isotope: None,
                     electrons: 2,
                     hydrogens: 3,
@@ -446,39 +354,13 @@ mod tests {
             result,
             Ok(Node {
                 atom: Atom {
-                    element: Some(Element::C),
+                    element: Element::C,
                     isotope: Some(12),
                     electrons: 4,
                     hydrogens: 0,
                     parity: None
                 },
                 bonds: vec![]
-            })
-        )
-    }
-
-    #[test]
-    fn bracket_star_parity() {
-        let Reading { root, trace } = read("C[*@](F)(Cl)I").unwrap();
-        let atoms = from_tree(root);
-        let result = to_node(1, &atoms.unwrap(), &trace);
-
-        assert_eq!(
-            result,
-            Ok(Node {
-                atom: Atom {
-                    element: None,
-                    isotope: None,
-                    electrons: 0,
-                    hydrogens: 0,
-                    parity: Some(Parity::Negative)
-                },
-                bonds: vec![
-                    Bond::new(2., None, 0),
-                    Bond::new(2., None, 2),
-                    Bond::new(2., None, 3),
-                    Bond::new(2., None, 4)
-                ]
             })
         )
     }
@@ -493,7 +375,7 @@ mod tests {
             result,
             Ok(Node {
                 atom: Atom {
-                    element: Some(Element::C),
+                    element: Element::C,
                     isotope: None,
                     electrons: 0,
                     hydrogens: 0,
@@ -519,7 +401,7 @@ mod tests {
             result,
             Ok(Node {
                 atom: Atom {
-                    element: Some(Element::B),
+                    element: Element::B,
                     isotope: None,
                     electrons: 0,
                     hydrogens: 0,
