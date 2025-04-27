@@ -2,13 +2,14 @@ use super::Parity;
 
 #[derive(Debug, PartialEq)]
 pub struct Bond {
-    pub electrons: u8,
+    // Having electrons as f32 allows for fractional bonds
+    pub electrons: f32,
     pub parity: Option<Parity>,
     pub tid: usize,
 }
 
 impl Bond {
-    pub fn new(electrons: u8, parity: Option<Parity>, tid: usize) -> Self {
+    pub fn new(electrons: f32, parity: Option<Parity>, tid: usize) -> Self {
         Self {
             electrons,
             parity,

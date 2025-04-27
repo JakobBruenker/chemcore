@@ -231,11 +231,11 @@ mod size {
         let molecule = DefaultMolecule::new(vec![
             Node {
                 atom: Atom::default(),
-                bonds: vec![Bond::new(2, None, 1)],
+                bonds: vec![Bond::new(2., None, 1)],
             },
             Node {
                 atom: Atom::default(),
-                bonds: vec![Bond::new(2, None, 0)],
+                bonds: vec![Bond::new(2., None, 0)],
             },
         ]);
 
@@ -296,15 +296,15 @@ mod neighbors {
         let molecule = DefaultMolecule::new(vec![
             Node {
                 atom: Atom::default(),
-                bonds: vec![Bond::new(2, None, 1), Bond::new(2, None, 2)],
+                bonds: vec![Bond::new(2., None, 1), Bond::new(2., None, 2)],
             },
             Node {
                 atom: Atom::default(),
-                bonds: vec![Bond::new(2, None, 0)],
+                bonds: vec![Bond::new(2., None, 0)],
             },
             Node {
                 atom: Atom::default(),
-                bonds: vec![Bond::new(2, None, 0)],
+                bonds: vec![Bond::new(2., None, 0)],
             },
         ]);
 
@@ -355,15 +355,15 @@ mod degree {
         let molecule = DefaultMolecule::new(vec![
             Node {
                 atom: Atom::default(),
-                bonds: vec![Bond::new(2, None, 1), Bond::new(2, None, 2)],
+                bonds: vec![Bond::new(2., None, 1), Bond::new(2., None, 2)],
             },
             Node {
                 atom: Atom::default(),
-                bonds: vec![Bond::new(2, None, 0)],
+                bonds: vec![Bond::new(2., None, 0)],
             },
             Node {
                 atom: Atom::default(),
-                bonds: vec![Bond::new(2, None, 0)],
+                bonds: vec![Bond::new(2., None, 0)],
             },
         ]);
 
@@ -394,22 +394,22 @@ mod edges {
             Node {
                 atom: Atom::default(),
                 bonds: vec![
-                    Bond::new(2, None, 1),
-                    Bond::new(2, None, 2),
-                    Bond::new(2, None, 3),
+                    Bond::new(2., None, 1),
+                    Bond::new(2., None, 2),
+                    Bond::new(2., None, 3),
                 ],
             },
             Node {
                 atom: Atom::default(),
-                bonds: vec![Bond::new(2, None, 0)],
+                bonds: vec![Bond::new(2., None, 0)],
             },
             Node {
                 atom: Atom::default(),
-                bonds: vec![Bond::new(2, None, 0)],
+                bonds: vec![Bond::new(2., None, 0)],
             },
             Node {
                 atom: Atom::default(),
-                bonds: vec![Bond::new(2, None, 0)],
+                bonds: vec![Bond::new(2., None, 0)],
             },
         ]);
 
@@ -468,11 +468,11 @@ mod has_edge {
         let molecule = DefaultMolecule::new(vec![
             Node {
                 atom: Atom::default(),
-                bonds: vec![Bond::new(2, None, 1)],
+                bonds: vec![Bond::new(2., None, 1)],
             },
             Node {
                 atom: Atom::default(),
-                bonds: vec![Bond::new(2, None, 0)],
+                bonds: vec![Bond::new(2., None, 0)],
             },
         ]);
 
@@ -545,7 +545,7 @@ mod charge {
                     electrons: 0,
                     parity: None,
                 },
-                bonds: vec![Bond::new(2, None, 1)],
+                bonds: vec![Bond::new(2., None, 1)],
             },
             Node {
                 atom: Atom {
@@ -555,7 +555,7 @@ mod charge {
                     electrons: 0,
                     parity: None,
                 },
-                bonds: vec![Bond::new(2, None, 0)],
+                bonds: vec![Bond::new(2., None, 0)],
             },
         ]);
 
@@ -573,7 +573,7 @@ mod charge {
                     electrons: 0,
                     parity: None,
                 },
-                bonds: vec![Bond::new(2, None, 1)],
+                bonds: vec![Bond::new(2., None, 1)],
             },
             Node {
                 atom: Atom {
@@ -583,7 +583,7 @@ mod charge {
                     electrons: 2,
                     parity: None,
                 },
-                bonds: vec![Bond::new(2, None, 0)],
+                bonds: vec![Bond::new(2., None, 0)],
             },
         ]);
 
@@ -645,7 +645,7 @@ mod bond_order {
                     electrons: 0,
                     parity: None,
                 },
-                bonds: vec![Bond::new(2, None, 1)],
+                bonds: vec![Bond::new(2., None, 1)],
             },
             Node {
                 atom: Atom {
@@ -655,7 +655,7 @@ mod bond_order {
                     electrons: 0,
                     parity: None,
                 },
-                bonds: vec![Bond::new(2, None, 0)],
+                bonds: vec![Bond::new(2., None, 0)],
             },
         ]);
 
@@ -673,7 +673,7 @@ mod bond_order {
                     electrons: 0,
                     parity: None,
                 },
-                bonds: vec![Bond::new(1, None, 1)],
+                bonds: vec![Bond::new(1., None, 1)],
             },
             Node {
                 atom: Atom {
@@ -683,7 +683,7 @@ mod bond_order {
                     electrons: 0,
                     parity: None,
                 },
-                bonds: vec![Bond::new(1, None, 0)],
+                bonds: vec![Bond::new(1., None, 0)],
             },
         ]);
 

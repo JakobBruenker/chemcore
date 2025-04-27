@@ -11,10 +11,10 @@ pub fn to_bond(
     trace: &[usize],
 ) -> Result<Bond, Error> {
     let (electrons, parity) = match &bond.kind {
-        BondKind::Elided | BondKind::Aromatic | BondKind::Single => (2, None),
+        BondKind::Elided | BondKind::Aromatic | BondKind::Single => (2., None),
         BondKind::Up | BondKind::Down => {
             if has_double(sid, bond, atoms) {
-                (2, None)
+                (2., None)
             } else {
                 return Err(Error::BondKind(trace[bond.tid]));
             }
@@ -33,16 +33,16 @@ pub fn to_bond(
                 if let Some(right) = &right_parity {
                     let neg_right = right.negate();
 
-                    (4, Some(left.multiply(&neg_right)))
+                    (4., Some(left.multiply(&neg_right)))
                 } else {
-                    (4, None)
+                    (4., None)
                 }
             } else {
-                (4, None)
+                (4., None)
             }
         }
-        BondKind::Triple => (6, None),
-        BondKind::Quadruple => (8, None),
+        BondKind::Triple => (6., None),
+        BondKind::Quadruple => (8., None),
     };
 
     Ok(Bond {
@@ -87,7 +87,7 @@ mod tests {
         let input = PurrBond::new(BondKind::Elided, 1);
         let bond = to_bond(0, &input, &atoms, &trace);
 
-        assert_eq!(bond, Ok(Bond::new(2, None, 1)))
+        assert_eq!(bond, Ok(Bond::new(2., None, 1)))
     }
 
     #[test]
@@ -97,7 +97,7 @@ mod tests {
         let input = PurrBond::new(BondKind::Single, 1);
         let bond = to_bond(0, &input, &atoms, &trace);
 
-        assert_eq!(bond, Ok(Bond::new(2, None, 1)))
+        assert_eq!(bond, Ok(Bond::new(2., None, 1)))
     }
 
     #[test]
@@ -107,7 +107,7 @@ mod tests {
         let input = PurrBond::new(BondKind::Double, 1);
         let bond = to_bond(0, &input, &atoms, &trace);
 
-        assert_eq!(bond, Ok(Bond::new(4, None, 1)))
+        assert_eq!(bond, Ok(Bond::new(4., None, 1)))
     }
 
     #[test]
@@ -117,7 +117,7 @@ mod tests {
         let input = PurrBond::new(BondKind::Double, 1);
         let bond = to_bond(0, &input, &atoms, &trace);
 
-        assert_eq!(bond, Ok(Bond::new(4, None, 1)))
+        assert_eq!(bond, Ok(Bond::new(4., None, 1)))
     }
 
     #[test]
@@ -127,7 +127,7 @@ mod tests {
         let input = PurrBond::new(BondKind::Double, 1);
         let bond = to_bond(0, &input, &atoms, &trace);
 
-        assert_eq!(bond, Ok(Bond::new(4, None, 1)))
+        assert_eq!(bond, Ok(Bond::new(4., None, 1)))
     }
 
     #[test]
@@ -137,7 +137,7 @@ mod tests {
         let input = PurrBond::new(BondKind::Double, 1);
         let bond = to_bond(0, &input, &atoms, &trace);
 
-        assert_eq!(bond, Ok(Bond::new(4, None, 1)))
+        assert_eq!(bond, Ok(Bond::new(4., None, 1)))
     }
 
     #[test]
@@ -147,7 +147,7 @@ mod tests {
         let input = PurrBond::new(BondKind::Double, 2);
         let bond = to_bond(1, &input, &atoms, &trace);
 
-        assert_eq!(bond, Ok(Bond::new(4, Some(Parity::Negative), 2)))
+        assert_eq!(bond, Ok(Bond::new(4., Some(Parity::Negative), 2)))
     }
 
     #[test]
@@ -157,7 +157,7 @@ mod tests {
         let input = PurrBond::new(BondKind::Double, 2);
         let bond = to_bond(1, &input, &atoms, &trace);
 
-        assert_eq!(bond, Ok(Bond::new(4, Some(Parity::Positive), 2)))
+        assert_eq!(bond, Ok(Bond::new(4., Some(Parity::Positive), 2)))
     }
 
     #[test]
@@ -167,7 +167,7 @@ mod tests {
         let input = PurrBond::new(BondKind::Double, 3);
         let bond = to_bond(1, &input, &atoms, &trace);
 
-        assert_eq!(bond, Ok(Bond::new(4, Some(Parity::Negative), 3)))
+        assert_eq!(bond, Ok(Bond::new(4., Some(Parity::Negative), 3)))
     }
 
     #[test]
@@ -177,7 +177,7 @@ mod tests {
         let input = PurrBond::new(BondKind::Double, 3);
         let bond = to_bond(1, &input, &atoms, &trace);
 
-        assert_eq!(bond, Ok(Bond::new(4, Some(Parity::Positive), 3)))
+        assert_eq!(bond, Ok(Bond::new(4., Some(Parity::Positive), 3)))
     }
 
     #[test]
@@ -187,7 +187,7 @@ mod tests {
         let input = PurrBond::new(BondKind::Double, 1);
         let bond = to_bond(0, &input, &atoms, &trace);
 
-        assert_eq!(bond, Ok(Bond::new(4, None, 1)))
+        assert_eq!(bond, Ok(Bond::new(4., None, 1)))
     }
 
     #[test]
@@ -197,7 +197,7 @@ mod tests {
         let input = PurrBond::new(BondKind::Double, 1);
         let bond = to_bond(0, &input, &atoms, &trace);
 
-        assert_eq!(bond, Ok(Bond::new(4, None, 1)))
+        assert_eq!(bond, Ok(Bond::new(4., None, 1)))
     }
 
     #[test]
@@ -207,7 +207,7 @@ mod tests {
         let input = PurrBond::new(BondKind::Triple, 1);
         let bond = to_bond(0, &input, &atoms, &trace);
 
-        assert_eq!(bond, Ok(Bond::new(6, None, 1)))
+        assert_eq!(bond, Ok(Bond::new(6., None, 1)))
     }
 
     #[test]
@@ -217,6 +217,6 @@ mod tests {
         let input = PurrBond::new(BondKind::Quadruple, 1);
         let bond = to_bond(0, &input, &atoms, &trace);
 
-        assert_eq!(bond, Ok(Bond::new(8, None, 1)))
+        assert_eq!(bond, Ok(Bond::new(8., None, 1)))
     }
 }

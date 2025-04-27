@@ -284,7 +284,7 @@ mod tests {
                     hydrogens: 0,
                     parity: None
                 },
-                bonds: vec![Bond::new(2, None, 0)]
+                bonds: vec![Bond::new(2., None, 0)]
             })
         )
     }
@@ -305,7 +305,7 @@ mod tests {
                     hydrogens: 3,
                     parity: None
                 },
-                bonds: vec![Bond::new(2, None, 0)]
+                bonds: vec![Bond::new(2., None, 0)]
             })
         )
     }
@@ -326,7 +326,7 @@ mod tests {
                     hydrogens: 3,
                     parity: None
                 },
-                bonds: vec![Bond::new(2, None, 0)]
+                bonds: vec![Bond::new(2., None, 0)]
             })
         )
     }
@@ -347,7 +347,7 @@ mod tests {
                     hydrogens: 0,
                     parity: None
                 },
-                bonds: vec![Bond::new(2, None, 0)]
+                bonds: vec![Bond::new(2., None, 0)]
             })
         )
     }
@@ -474,10 +474,10 @@ mod tests {
                     parity: Some(Parity::Negative)
                 },
                 bonds: vec![
-                    Bond::new(2, None, 0),
-                    Bond::new(2, None, 2),
-                    Bond::new(2, None, 3),
-                    Bond::new(2, None, 4)
+                    Bond::new(2., None, 0),
+                    Bond::new(2., None, 2),
+                    Bond::new(2., None, 3),
+                    Bond::new(2., None, 4)
                 ]
             })
         )
@@ -500,10 +500,10 @@ mod tests {
                     parity: Some(Parity::Negative)
                 },
                 bonds: vec![
-                    Bond::new(2, None, 0),
-                    Bond::new(2, None, 2),
-                    Bond::new(2, None, 3),
-                    Bond::new(2, None, 4)
+                    Bond::new(2., None, 0),
+                    Bond::new(2., None, 2),
+                    Bond::new(2., None, 3),
+                    Bond::new(2., None, 4)
                 ]
             })
         )
@@ -526,10 +526,10 @@ mod tests {
                     parity: None
                 },
                 bonds: vec![
-                    Bond::new(2, None, 1),
-                    Bond::new(2, None, 2),
-                    Bond::new(2, None, 3),
-                    Bond::new(2, None, 4)
+                    Bond::new(2., None, 1),
+                    Bond::new(2., None, 2),
+                    Bond::new(2., None, 3),
+                    Bond::new(2., None, 4)
                 ]
             })
         )

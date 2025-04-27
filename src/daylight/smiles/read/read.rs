@@ -104,7 +104,7 @@ mod tests {
                         isotope: None,
                         parity: None
                     },
-                    bonds: vec![Bond::new(2, None, 1)]
+                    bonds: vec![Bond::new(2., None, 1)]
                 },
                 Node {
                     atom: Atom {
@@ -114,7 +114,7 @@ mod tests {
                         isotope: None,
                         parity: None
                     },
-                    bonds: vec![Bond::new(2, None, 0)]
+                    bonds: vec![Bond::new(2., None, 0)]
                 },
             ]))
         )
@@ -133,7 +133,7 @@ mod tests {
                         isotope: None,
                         parity: None
                     },
-                    bonds: vec![Bond::new(2, None, 1)]
+                    bonds: vec![Bond::new(2., None, 1)]
                 },
                 Node {
                     atom: Atom {
@@ -143,7 +143,7 @@ mod tests {
                         isotope: None,
                         parity: None
                     },
-                    bonds: vec![Bond::new(2, None, 0)]
+                    bonds: vec![Bond::new(2., None, 0)]
                 },
             ]))
         )
@@ -162,7 +162,7 @@ mod tests {
                         isotope: None,
                         parity: None
                     },
-                    bonds: vec![Bond::new(2, None, 1)]
+                    bonds: vec![Bond::new(2., None, 1)]
                 },
                 Node {
                     atom: Atom {
@@ -172,7 +172,7 @@ mod tests {
                         isotope: None,
                         parity: None
                     },
-                    bonds: vec![Bond::new(2, None, 0)]
+                    bonds: vec![Bond::new(2., None, 0)]
                 },
             ]))
         )
@@ -191,7 +191,7 @@ mod tests {
                         isotope: None,
                         parity: None
                     },
-                    bonds: vec![Bond::new(4, None, 1)]
+                    bonds: vec![Bond::new(4., None, 1)]
                 },
                 Node {
                     atom: Atom {
@@ -201,7 +201,7 @@ mod tests {
                         isotope: None,
                         parity: None
                     },
-                    bonds: vec![Bond::new(4, None, 0)]
+                    bonds: vec![Bond::new(4., None, 0)]
                 },
             ]))
         )
@@ -220,7 +220,7 @@ mod tests {
                         isotope: None,
                         parity: None
                     },
-                    bonds: vec![Bond::new(4, None, 1)]
+                    bonds: vec![Bond::new(4., None, 1)]
                 },
                 Node {
                     atom: Atom {
@@ -230,7 +230,7 @@ mod tests {
                         isotope: None,
                         parity: None
                     },
-                    bonds: vec![Bond::new(4, None, 0)]
+                    bonds: vec![Bond::new(4., None, 0)]
                 },
             ]))
         )
@@ -249,7 +249,7 @@ mod tests {
                         isotope: None,
                         parity: None
                     },
-                    bonds: vec![Bond::new(2, None, 1)]
+                    bonds: vec![Bond::new(2., None, 1)]
                 },
                 Node {
                     atom: Atom {
@@ -260,8 +260,8 @@ mod tests {
                         parity: None
                     },
                     bonds: vec![
-                        Bond::new(2, None, 0),
-                        Bond::new(4, Some(Parity::Negative), 2)
+                        Bond::new(2., None, 0),
+                        Bond::new(4., Some(Parity::Negative), 2)
                     ]
                 },
                 Node {
@@ -273,8 +273,8 @@ mod tests {
                         parity: None
                     },
                     bonds: vec![
-                        Bond::new(4, Some(Parity::Negative), 1),
-                        Bond::new(2, None, 3)
+                        Bond::new(4., Some(Parity::Negative), 1),
+                        Bond::new(2., None, 3)
                     ]
                 },
                 Node {
@@ -285,7 +285,7 @@ mod tests {
                         isotope: None,
                         parity: None
                     },
-                    bonds: vec![Bond::new(2, None, 2)]
+                    bonds: vec![Bond::new(2., None, 2)]
                 }
             ]))
         )
