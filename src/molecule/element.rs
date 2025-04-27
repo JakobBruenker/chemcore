@@ -1,7 +1,7 @@
 use purr::parts;
 
 #[rustfmt::skip]
-#[derive(PartialEq,Eq,PartialOrd,Ord,Debug,Clone,Copy)]
+#[derive(PartialEq,Eq,PartialOrd,Ord,Debug,Clone,Copy,Hash)]
 pub enum Element {
 //  0   1   2   3   4   5   6   7   8   9
         H,  He, Li, Be, B,  C,  N,  O,  F,  //  0
